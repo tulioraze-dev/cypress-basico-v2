@@ -18,10 +18,6 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('.success').should('be.visible').and('contain', 'Mensagem enviada com sucesso.')
   })
 
-  it('exercicio extra 1', () => {
-    cy.get('#open-text-area').type('alguma coisa', { delay: 0 })
-  })
-
   it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', () => {
     cy.get('#firstName').type('teste')
     cy.get('#lastName').type('da silva')
@@ -39,7 +35,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('#firstName').type('teste')
     cy.get('#lastName').type('da silva')
     cy.get('#email').type('teste@teste.com')
-    cy.get('#phone-checkbox').click()
+    cy.get('#phone-checkbox').check()
     cy.get('#open-text-area').type('cenario 2 de teste')
     cy.contains('.button', 'Enviar').click()
     cy.get('.error').should('be.visible').and('contain', 'Valide os campos obrigatórios!')
@@ -78,9 +74,54 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('[type="radio"]').check('feedback').should('be.checked').and('have.value', 'feedback')
   })
 
-  it.only('marca cada tipo de atendimento', () => {
+  it('marca cada tipo de atendimento', () => {
     cy.get('[type="radio"]').each(($radio) => {
       cy.wrap($radio).check().should('be.checked')
     })
+  })
+
+  it('marca ambos checkboxes, depois desmarca o último', () => {
+    cy.get('[type="checkbox"]').first().check().should('be.checked')
+    cy.get('[type="checkbox"]').last().check().should('be.checked')
+    cy.get('[type="checkbox"]').last().uncheck().should('not.be.checked')
+  })
+
+  it('seleciona um arquivo simulando um drag-and-drop', () => {
+    cy.get('input[type="file"]').selectFile('cypress/fixtures/ROTEIRO_DE_EXTENSAO_delivery.pdf')
+      .should((input) => {
+        expect(input[0].files[0].name).eq('ROTEIRO_DE_EXTENSAO_delivery.pdf')
+      })
+  })
+
+  it('seleciona um arquivo simulando um drag-and-drop', () => {
+    cy.get('input[type="file"]')
+      .selectFile('cypress/fixtures/ROTEIRO_DE_EXTENSAO_delivery.pdf', { action: 'drag-drop'})
+      .should((input) => {
+        expect(input[0].files[0].name).eq('ROTEIRO_DE_EXTENSAO_delivery.pdf')
+      })
+  })
+
+  it('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', () => {
+    cy.fixture("ROTEIRO_DE_EXTENSAO_delivery.pdf").as('pdf')
+
+    cy.get('input[type="file"]').selectFile('@pdf').then((input) => {
+      expect(input[0].files[0].name).eq('ROTEIRO_DE_EXTENSAO_delivery.pdf')
+    })
+  })
+
+  it('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', () => {
+    cy.get('[href="privacy.html"]').should('have.attr', 'target', '_blank')
+  })
+
+  it('acessa a página da política de privacidade removendo o target e então clicando no link', () => {
+    cy.get('[href="privacy.html"]').invoke('removeAttr', 'target').click()
+
+    cy.contains('Talking About Testing').should('be.visible')
+  })
+
+  it('testa a página da política de privacidade de forma independente', () => {
+    cy.visit('../src/privacy.html')
+
+    cy.contains('Talking About Testing').should('be.visible')
   })
 })
