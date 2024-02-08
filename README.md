@@ -1,29 +1,23 @@
-# Testes automatizados com Cypress - Básico
+# Curso de Cypress - Básico
 
-👋 Seja bem-vindo(a)!
+Repositório reservado para os exercicios realizado no curso de Cypress - Básico, da escola Talking About Test, com o professor Walmyr Filho.
 
-É muito bom tê-lo(a) aqui. Tenho certeza que você vai adorar este curso. ❤️
+## Pre-requisitos
 
-## O que você vai aprender
+- [Node.js](https://nodejs.org/pt-br/)
 
-Durante o curso de testes automatizados com Cypress (básico), você vai aprender:
+> **Obs.:** Recomendo utilizar as mesmas versões, ou versões mais recentes dos sistemas listados acima.
+>
+> **Obs.:** Ao instalar o Node.js, o npm ja é instalado junto.
+>
+> **Obs.:** Para verificar a versão de seu node, ou se o possui instlado, basta abrir seu terminal(cmd) e digitar o seguinte comando `git --version && node --version && npm --version`
 
-- Como configurar um projeto Cypress do zero
-- Como visitar páginas locais e remotas
-- Como lidar com os elementos mais comuns encontrados em aplicações web
-- Como testar _upload_ de arquivos
-- Como realizar as mais diversas verificações de resultados esperados
-- Como criar comandos customizados
-- Como lidar com links que abrem em outra aba do navegador
-- Como rodar testes simulando as dimensões de um dispositivo móvel
-- Como resolver os mesmos problemas de diferentes formas, conhecendo a [API do Cypress](https://docs.cypress.io/api/table-of-contents)
-- Como executar os testes em um _pipeline_ de integração contínua sempre que mudanças ocorrerem no código da aplicação (ou dos testes)
-- Como criar uma documentação mínima para seu projeto de testes automatizados
+## Instalação
 
-## Vamos começar?
+Basta dentro do diretório que possui a pasta cypress rodar o seguinte comando `npm install` ou `npm -i`
 
-Vá para a seção [estrutura do curso](./lessons/_course-structure_.md).
+## Tests
 
-___
+Para rodar os testes em modo headless basta no diretorio principal digitar o seguinte comando `npm run headless`
 
-Este é mais um curso da [**Escola Talking About Testing**](https://udemy.com/user/walmyr).
+Para abrir o Cypress e rodar os testes no modo visual basta no diretorio principal digitar o seguinte comando `npm run open`
