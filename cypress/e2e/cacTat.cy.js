@@ -144,4 +144,17 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('#open-text-area').invoke('val', 'teste invoke').should('have.value', 'teste invoke')
   })
 
+  it('faz uma requisição HTTP', () => {
+    cy.request({
+      url: 'https://cac-tat.s3.eu-central-1.amazonaws.com/index.html',
+      method: 'GET'
+    }).then(res => {
+      expect(res.status).eq(200)
+      expect(res.body).contain('CAC TAT')
+    })
+  })
+
+  it.only('Encontra o gato e exibe o gato', () => {
+    cy.get('#cat').should('not.be.visible').invoke('show').should('be.visible')
+  })
 })
