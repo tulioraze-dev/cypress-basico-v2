@@ -3,6 +3,8 @@
 describe('Central de Atendimento ao Cliente TAT', () => {
   beforeEach(() => {
     cy.visit('../src/index.html')
+
+    cy.clock()
   })
 
   it('verifica o título da aplicação', () => {
@@ -15,7 +17,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('#email').type('teste@teste.com')
     cy.get('#open-text-area').type('cenario 2 de teste')
     cy.contains('.button', 'Enviar').click()
-    cy.get('.success').should('be.visible').and('contain', 'Mensagem enviada com sucesso.')
+    cy.validaMensagens('.success', 'Mensagem enviada com sucesso.')
   })
 
   it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', () => {
@@ -24,7 +26,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('#email').type('testeteste.com')
     cy.get('#open-text-area').type('cenario 2 de teste')
     cy.contains('.button', 'Enviar').click()
-    cy.get('.error').should('be.visible').and('contain', 'Valide os campos obrigatórios!')
+    cy.validaMensagens('.error', 'Valide os campos obrigatórios!')
   })
 
   it('valida que campo telefone só aceita tipo numérico', () => {
@@ -32,13 +34,14 @@ describe('Central de Atendimento ao Cliente TAT', () => {
   })
 
   it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
+    cy.clock()
     cy.get('#firstName').type('teste')
     cy.get('#lastName').type('da silva')
     cy.get('#email').type('teste@teste.com')
     cy.get('#phone-checkbox').check()
     cy.get('#open-text-area').type('cenario 2 de teste')
     cy.contains('.button', 'Enviar').click()
-    cy.get('.error').should('be.visible').and('contain', 'Valide os campos obrigatórios!')
+    cy.validaMensagens('.error', 'Valide os campos obrigatórios!')
   })
 
   it('preenche e limpa os campos nome, sobrenome, email e telefone', () => {
@@ -50,12 +53,12 @@ describe('Central de Atendimento ao Cliente TAT', () => {
 
   it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', () => {
     cy.contains('.button', 'Enviar').click()
-    cy.get('.error').should('be.visible').and('contain', 'Valide os campos obrigatórios!')
+    cy.validaMensagens('.error', 'Valide os campos obrigatórios!')
   })
 
   it('envia o formuário com sucesso usando um comando customizad', () => {
       cy.enviaFormularioPreenchido()
-      cy.get('.success').should('be.visible').and('contain', 'Mensagem enviada com sucesso.')
+      cy.validaMensagens('.success', 'Mensagem enviada com sucesso.')
   })
 
   it('seleciona um produto (YouTube) por seu texto', () => {
